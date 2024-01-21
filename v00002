@@ -1,0 +1,57 @@
+1. Add Input for Recipient Address:
+
+Create a new input field for the recipient's address:
+JavaScript
+<input
+  type="text"
+  placeholder="Recipient Address"
+  value={address}
+  onChange={handleAddressChange}
+/>
+Use o código com cuidado. Saiba mais
+Define the handleAddressChange function to update the address state variable:
+JavaScript
+const handleAddressChange = (event) => {
+  setAddress(event.target.value);
+};
+Use o código com cuidado. Saiba mais
+2. Call the Transfer Function:
+
+Import the necessary hook for interacting with the NFT contract:
+JavaScript
+import { useNFTContract } from './hooks';
+Use o código com cuidado. Saiba mais
+Fetch the NFT contract instance:
+JavaScript
+const { nftContract } = useNFTContract();
+Use o código com cuidado. Saiba mais
+Implement a function to initiate the transfer:
+JavaScript
+const handleTransfer = async () => {
+  try {
+    await nftContract.safeTransferFrom(message.sender, recipientAddress, tokenId);
+    // Display success message
+  } catch (error) {
+    // Handle any errors during transfer
+  }
+};
+Use o código com cuidado. Saiba mais
+3. Trigger Transfer:
+
+Add a button to trigger the transfer:
+JavaScript
+<button onClick={handleTransfer}>Transfer NFT</button>
+Use o código com cuidado. Saiba mais
+4. Additional Considerations:
+
+Error Handling: Implement proper error handling to catch potential issues during transfer.
+UI Updates: Display loading indicators or success/failure messages to provide feedback to the user.
+Security: Consider implementing security measures to prevent unauthorized transfers.
+Contract Address: Ensure you're using the correct contract address for the NFT contract.
+Token ID: Access the correct token ID from the URL parameters for the specific NFT.
+5. Test the Functionality:
+
+Deploy the modified code.
+Access the nft/[id].tsx page for an NFT owned by your wallet.
+Enter the recipient address and click the transfer button.
+Verify the transfer's success on the thirdweb dashboard.
