@@ -1,0 +1,86 @@
+JavaScript
+import React from "react";
+import { useMoralis } from "moralis";
+import { useNFTContract } from "thirdweb";
+
+function App() {
+  const { account, chainId } = useMoralis();
+  const { nftContract } = useNFTContract();
+
+  const [tasks, setTasks] = useState([]);
+
+  const handleAddTask = async () => {
+    const newTask = {
+      title: "New Task",
+      description: "This is a new task",
+    };
+
+    try {
+      await nftContract.create(newTask);
+      setTasks([...tasks, newTask]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteTask = async (taskId) => {
+    try {
+      await nftContract.delete(taskId);
+      setTasks(tasks.filter((task) => task.id !== taskId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Decentralized Task Manager</h1>
+
+      <ul>
+        {tasks.map((task) => (
+          <li key={task.id}>
+            <strong>{task.title}</strong>
+            <p>{task.description}</p>
+            <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+
+      <button onClick={handleAddTask}>Add Task</button>
+    </div>
+  );
+}
+
+export default App;
+Use o código com cuidado. Saiba mais
+Este aplicativo usa Moralis para fornecer acesso à rede CHZ e Thirdweb para interagir com um contrato inteligente de NFT. O contrato inteligente é usado para armazenar as informações sobre as tarefas, incluindo o título, a descrição e o ID.
+
+O aplicativo tem duas funções principais:
+
+handleAddTask(): adiciona uma nova tarefa ao contrato inteligente.
+handleDeleteTask(): exclui uma tarefa do contrato inteligente.
+Aqui está um exemplo de como o aplicativo seria usado:
+
+# Adicionar uma nova tarefa
+
+const newTask = {
+  title: "New Task",
+  description: "This is a new task",
+};
+
+await nftContract.create(newTask);
+
+# Listar as tarefas
+
+const tasks = await nftContract.all();
+
+# Excluir uma tarefa
+
+await nftContract.delete(taskId);
+Você pode personalizar este aplicativo para atender às suas necessidades específicas. Por exemplo, você pode adicionar mais campos ao contrato inteligente para armazenar mais informações sobre as tarefas. Você também pode adicionar novos recursos ao aplicativo, como a capacidade de marcar tarefas como concluídas ou a capacidade de atribuir tarefas a outros usuários.
+
+Aqui estão algumas ideias adicionais para aplicativos descentralizados:
+
+DAO: Um DAO é uma organização descentralizada que é administrada por seus membros. Um aplicativo DAO poderia ser usado para gerenciar uma comunidade, um projeto ou uma empresa.
+Learning Platform: Uma plataforma de aprendizado descentralizada poderia ser usada para fornecer acesso a cursos, treinamentos e outros materiais educacionais.
+Auction House: Uma casa de leilões descentralizada poderia ser usada para vender itens digitais, como NFTs, arte digital ou música.
