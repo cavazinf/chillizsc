@@ -1,0 +1,53 @@
+1. Import tokenBalance:
+
+Change the import statement to include tokenBalance:
+JavaScript
+const { message, tokenBalance, nativeBalance } = useBalances();
+Use o código com cuidado. Saiba mais
+2. Check for Fan Token Balance:
+
+Access the fan token balance using either symbol or token address:
+JavaScript
+const fanTokenAddress = "0xF9C0F80a6c67b1B39bdDF00ecD57f2533ef5b688"; // Replace with the actual fan token address
+const fanTokenBalance = tokenBalance.find((token) => token.token_address === fanTokenAddress);
+Use o código com cuidado. Saiba mais
+3. Add Condition to isEligible:
+
+Check for both native token and fan token balances:
+JavaScript
+const isEligible = formatBalance(nativeBalance) > 1 && fanTokenBalance && formatBalance(fanTokenBalance.balance) > 1;
+Use o código com cuidado. Saiba mais
+4. Update Entry Logic:
+
+Use isEligible to control access:
+JavaScript
+if (isEligible) {
+  // Allow access to MeetPage
+} else {
+  // Display message indicating missing requirements
+}
+Use o código com cuidado. Saiba mais
+Additional Considerations:
+
+formatBalance Function: Ensure the formatBalance function is defined to correctly remove decimals from token balances.
+Error Handling: Consider handling cases where tokenBalance or fanTokenBalance might be undefined.
+UI Updates: Update any UI elements that display entry requirements to reflect the addition of the fan token requirement.
+Example Code Snippet:
+
+JavaScript
+import { useBalances } from './hooks';
+
+function MeetPage() {
+  const { message, tokenBalance, nativeBalance } = useBalances();
+
+  const fanTokenAddress = "0xF9C0F80a6c67b1B39bdDF00ecD57f2533ef5b688"; // Replace with the actual fan token address
+  const fanTokenBalance = tokenBalance.find((token) => token.token_address === fanTokenAddress);
+
+  const isEligible = formatBalance(nativeBalance) > 1 && fanTokenBalance && formatBalance(fanTokenBalance.balance) > 1;
+
+  if (isEligible) {
+    // Render MeetPage content
+  } else {
+    // Display message about missing requirements
+  }
+}
